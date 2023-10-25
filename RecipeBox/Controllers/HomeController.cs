@@ -17,15 +17,25 @@ namespace RecipeBox.Controllers
       _db = db;
     }
 
+    // [HttpGet("/")]
+    // public ActionResult Index()
+    // {
+    //   Recipe[] recipes = _db.Recipes.ToArray();
+    //   Dictionary<string, object[]> model = new Dictionary<string, object[]>();
+    //   model.Add("recipes", recipes);
+
+    //   return View(model);
+    // }
+
     [HttpGet("/")]
     public ActionResult Index()
     {
       Recipe[] recipes = _db.Recipes.ToArray();
+      Cuisine[] cuisines = _db.Cuisines.ToArray();
       Dictionary<string, object[]> model = new Dictionary<string, object[]>();
       model.Add("recipes", recipes);
-
+      model.Add("cuisines", cuisines);
       return View(model);
     }
-
   }
 }

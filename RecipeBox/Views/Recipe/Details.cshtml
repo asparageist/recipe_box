@@ -1,0 +1,25 @@
+@{
+  Layout = "_Layout";
+}
+
+@model RecipeBox.Models.Recipe;
+@using RecipeBox.Models;
+@using System.Collections.Generic;
+
+<h2>Recipe Details</h2>
+<hr />
+<h3>@Html.DisplayNameFor(model => model.RecipeName): @Html.DisplayFor(model => model.RecipeName)</h3>
+
+@if (@Model.Cuisines.Count == 0)
+{
+  <p>nope</p>
+}
+else
+{
+  <p>yup</p>
+}
+
+<p>@Html.ActionLink("Back to categories", "Index")</p>
+<p>@Html.ActionLink("Edit Category", "Edit", new { id = Model.RecipeID })</p>
+<p>@Html.ActionLink("Delete Category", "Delete", new { id = Model.RecipeID })</p>
+<p>@Html.ActionLink("Add new item", "Create", "Items")</p>

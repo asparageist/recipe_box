@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 
 namespace RecipeBox.Models
 {
@@ -8,6 +9,9 @@ namespace RecipeBox.Models
     public int RecipeID { get; set; }
     [Required(ErrorMessage = "what this recipe is")]
     public string RecipeName { get; set; }
+    public List<Cuisine> Cuisines { get; set; }
+    public int CuisineID { get; set; }
+
     public List<CuisineRecipe> JoinEntities { get; }
     // public ApplicationUser User { get; set; }
   }

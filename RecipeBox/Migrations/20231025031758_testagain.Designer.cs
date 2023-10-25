@@ -10,8 +10,8 @@ using RecipeBox.Models;
 namespace RecipeBox.Migrations
 {
     [DbContext(typeof(RecipeBoxContext))]
-    [Migration("20231024034312_NewInitial")]
-    partial class NewInitial
+    [Migration("20231025031758_testagain")]
+    partial class testagain
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,7 +30,12 @@ namespace RecipeBox.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("RecipeID")
+                        .HasColumnType("int");
+
                     b.HasKey("CuisineID");
+
+                    b.HasIndex("RecipeID");
 
                     b.ToTable("Cuisines");
                 });
@@ -62,6 +67,9 @@ namespace RecipeBox.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("CuisineID")
+                        .HasColumnType("int");
+
                     b.Property<string>("RecipeName")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -69,6 +77,15 @@ namespace RecipeBox.Migrations
                     b.HasKey("RecipeID");
 
                     b.ToTable("Recipes");
+                });
+
+            modelBuilder.Entity("RecipeBox.Models.Cuisine", b =>
+                {
+                    b.HasOne("RecipeBox.Models.Recipe", null)
+                        .WithMany("Cuisines")
+                        .HasForeignKey("RecipeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RecipeBox.Models.CuisineRecipe", b =>
@@ -97,6 +114,8 @@ namespace RecipeBox.Migrations
 
             modelBuilder.Entity("RecipeBox.Models.Recipe", b =>
                 {
+                    b.Navigation("Cuisines");
+
                     b.Navigation("JoinEntities");
                 });
 #pragma warning restore 612, 618

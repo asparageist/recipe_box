@@ -3,13 +3,14 @@
 }
 
 @using RecipeBox.Models
+@model Dictionary<string, object[]>
+
 
 <div>
   <h1>recipes!</h1>
 </div>
 <div>
   <h2>check these out</h2>
-  <p>@Model["recipes"].Length</p>
 
   @if (Model["recipes"].Length == 0)
   {
@@ -17,15 +18,11 @@
   }
   else
   {
-    <ul>
-      @foreach (Recipe recipe in Model)
-      {
-        <li>@Html.ActionLink($"{recipe.RecipeName}", "Recipe", new { id = recipe.RecipeID })</li>
-      }
-    </ul>
+
+    <p>@Html.ActionLink("go to recipes", "Index", "Recipe")</p>
+    <p>@Html.ActionLink("go to cuisines", "Index", "Cuisine")</p>
+
   }
 
-
-  <p>@Html.ActionLink("Add a new Recipe", "New", "Recipe")</p>
 
 </div>

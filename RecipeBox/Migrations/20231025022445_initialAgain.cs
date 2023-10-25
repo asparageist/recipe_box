@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RecipeBox.Migrations
 {
-    public partial class NewInitial : Migration
+    public partial class initialAgain : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
