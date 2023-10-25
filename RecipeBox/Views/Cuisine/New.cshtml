@@ -1,0 +1,19 @@
+@{
+  Layout = "_Layout";
+}
+
+@model RecipeBox.Models.Cuisine
+
+<h4>Add a new cuisine</h4>
+
+
+@using (Html.BeginForm())
+{
+  @Html.LabelFor(model => model.CuisineName)
+  @Html.TextBoxFor(model => model.CuisineName)
+  @Html.ValidationMessageFor(model => model.CuisineName)
+  <input type="submit" value="Add new cuisine" class="btn btn-primary" />
+
+}
+<p>@Html.ActionLink("Show all cuisines", "Index")</p>
+<p>@Html.ActionLink("Back to Home", "Index", "Home")</p>

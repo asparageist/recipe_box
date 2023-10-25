@@ -20,8 +20,11 @@ namespace RecipeBox.Controllers
     [HttpGet("/")]
     public ActionResult Index()
     {
-      // ViewBag.Recipes = _db.Recipes.ToList();
-      return View();
+      Recipe[] recipes = _db.Recipes.ToArray();
+      Dictionary<string, object[]> model = new Dictionary<string, object[]>();
+      model.Add("recipes", recipes);
+
+      return View(model);
     }
 
   }

@@ -8,7 +8,7 @@ namespace RecipeBox.Models
     public int RecipeID { get; set; }
     [Required(ErrorMessage = "what this recipe is")]
     public string RecipeName { get; set; }
-    public List<RecipeVariety> JoinEntities { get; }
+    public List<CuisineRecipe> JoinEntities { get; }
     // public ApplicationUser User { get; set; }
   }
 }

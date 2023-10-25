@@ -6,9 +6,9 @@ namespace RecipeBox.Models
   // public class RecipeBoxContext : IdentityDbContext<ApplicationUser>
   public class RecipeBoxContext : DbContext
   {
-    public DbSet<Recipe> Recipe { get; set; }
-    public DbSet<Variety> Varieties { get; set; }
-    public DbSet<RecipeVariety> RecipeVarieties { get; set; }
+    public DbSet<Recipe> Recipes { get; set; }
+    public DbSet<Cuisine> Cuisines { get; set; }
+    public DbSet<CuisineRecipe> CuisineRecipes { get; set; }
 
     public RecipeBoxContext(DbContextOptions options) : base(options) { }
   }

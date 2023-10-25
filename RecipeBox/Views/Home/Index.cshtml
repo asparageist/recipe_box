@@ -2,10 +2,30 @@
   Layout = "_Layout";
 }
 
+@using RecipeBox.Models
+
 <div>
   <h1>recipes!</h1>
 </div>
 <div>
   <h2>check these out</h2>
-  @* list of recipes code here *@
+  <p>@Model["recipes"].Length</p>
+
+  @if (Model["recipes"].Length == 0)
+  {
+    <h3>No Recipes!</h3>
+  }
+  else
+  {
+    <ul>
+      @foreach (Recipe recipe in Model)
+      {
+        <li>@Html.ActionLink($"{recipe.RecipeName}", "Recipe", new { id = recipe.RecipeID })</li>
+      }
+    </ul>
+  }
+
+
+  <p>@Html.ActionLink("Add a new Recipe", "New", "Recipe")</p>
+
 </div>
