@@ -12,20 +12,40 @@
 <div>
   <h2>check these out</h2>
 
-  @if (Model["recipes"].Length == 0)
+  @if (Model["cuisines"].Length == 0)
   {
-    <h3>No Recipes!</h3>
-    <p>@Html.ActionLink("add a recipe", "new", "Recipe")</p>
+    <p>No cuisines have been added yet!</p>
+  }
+  <ul>
+    @foreach (Cuisine cuisine in Model["cuisines"])
+    {
+      <li>@Html.ActionLink(@cuisine.CuisineName, "Details", "Cuisines", new { id = @cuisine.CuisineID })</li>
+    }
+  </ul>
 
+  @if (User.Identity.IsAuthenticated)
+  {
+    <h4>Items for @User.Identity.Name</h4>
+    @if (Model["recipes"].Length == 0)
+    {
+      <p>No items have been added yet!</p>
+    }
+    <ul>
+      @foreach (Recipe recipe in Model["recipes"])
+      {
+        <li>@Html.ActionLink(@recipe.RecipeName, "Details", "Recipes", new { id = @recipe.RecipeID })</li>
+      }
+    </ul>
   }
   else
   {
-
-    <p>@Html.ActionLink("go to recipes", "Index", "Recipe")</p>
-    <p>@Html.ActionLink("go to cuisines", "Index", "Cuisine")</p>
-    <p>@Html.ActionLink("Create or manage an account", "Index", "Account")</p>
-
+    <h4>Items</h4>
+    <p>Please @Html.ActionLink("log in", "LogIn", "Account") to view or manage your items.</p>
   }
 
+  <hr />
 
+  <p>@Html.ActionLink("go to recipes", "Index", "Recipe")</p>
+  <p>@Html.ActionLink("go to cuisines", "Index", "Cuisine")</p>
+  <p>@Html.ActionLink("Create or manage an account", "Index", "Account")</p>
 </div>

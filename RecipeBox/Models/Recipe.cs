@@ -11,6 +11,6 @@ namespace RecipeBox.Models
     public string RecipeName { get; set; }
     public List<Cuisine> Cuisines { get; set; }
     public List<CuisineRecipe> JoinEntities { get; }
-    // public ApplicationUser User { get; set; }
+    public ApplicationUser User { get; set; }
   }
 }

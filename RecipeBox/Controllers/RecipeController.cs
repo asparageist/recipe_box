@@ -5,23 +5,42 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace RecipeBox.Controllers
 {
+  [Authorize]
   public class RecipeController : Controller
   {
     private readonly RecipeBoxContext _db;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public RecipeController(RecipeBoxContext db)
+    public RecipeController(UserManager<ApplicationUser> userManager, RecipeBoxContext db)
     {
+      _userManager = userManager;
       _db = db;
     }
 
-    public ActionResult Index()
+    public async Task<ActionResult> Index()
     {
-      ViewBag.PageTitle = "All Recipes";
-      return View(_db.Recipes.ToList());
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      List<Recipe> userRecipes = _db.Recipes
+                          .Where(entry => entry.User.Id == currentUser.Id)
+                          .Include(recipe => recipe.Cuisines)
+                          .ToList();
+      return View(userRecipes);
     }
+
+    // public ActionResult Index()
+    // {
+    //   ViewBag.PageTitle = "All Recipes";
+    //   return View(_db.Recipes.ToList());
+    // }
+
 
     public ActionResult New()
     {
@@ -30,12 +49,31 @@ namespace RecipeBox.Controllers
     }
 
     [HttpPost]
-    public ActionResult New(Recipe recipe)
+    public async Task<ActionResult> New(Recipe recipe, int CuisineId)
     {
-      _db.Recipes.Add(recipe);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      if (!ModelState.IsValid)
+      {
+        ViewBag.CuisineId = new SelectList(_db.Cuisines, "CusiineId", "Name");
+        return View(recipe);
+      }
+      else
+      {
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+        recipe.User = currentUser;
+        _db.Recipes.Add(recipe);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
     }
+
+    // [HttpPost]
+    // public ActionResult New(Recipe recipe)
+    // {
+    //   _db.Recipes.Add(recipe);
+    //   _db.SaveChanges();
+    //   return RedirectToAction("Index");
+    // }
 
     public ActionResult Details(int id)
     {

@@ -5,9 +5,11 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Principal;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RecipeBox.Controllers
 {
+  [Authorize]
   public class CuisineController : Controller
   {
     private readonly RecipeBoxContext _db;
@@ -36,8 +38,6 @@ namespace RecipeBox.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
-
-
 
     public ActionResult Details(int id)
     {
