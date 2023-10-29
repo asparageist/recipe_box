@@ -3,8 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace RecipeBox.Models
 {
-  // public class RecipeBoxContext : IdentityDbContext<ApplicationUser>
-  public class RecipeBoxContext : DbContext
+  public class RecipeBoxContext : IdentityDbContext<ApplicationUser>
   {
     public DbSet<Recipe> Recipes { get; set; }
     public DbSet<Cuisine> Cuisines { get; set; }
