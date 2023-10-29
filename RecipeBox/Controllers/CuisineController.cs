@@ -37,6 +37,8 @@ namespace RecipeBox.Controllers
       return RedirectToAction("Index");
     }
 
+
+
     public ActionResult Details(int id)
     {
       Cuisine thisCuisine = _db.Cuisines.FirstOrDefault(cuisine => cuisine.CuisineID == id);
